@@ -313,7 +313,7 @@ export default class ProductUIComponent {
       `;
     }
     this.#productDetailModal.innerHTML = `
-      <div class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+      <div id="innerModelPro" class="bg-white rounded-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
         <div class="p-6">
             <!-- Header -->
             <div class="flex items-start gap-6 mb-6">
@@ -431,6 +431,14 @@ export default class ProductUIComponent {
     `;
     this.#productDetailModal.classList.remove("hidden");
     this.#productDetailModal.classList.add("fixed");
+    window.addEventListener("click", (e) => {
+      const card = e.target.closest(".product-card");
+      if (card) return;
+      const ele = e.target.closest("#innerModelPro");
+      if (ele) return;
+      this.#productDetailModal.innerHTML = "";
+      this.#productDetailModal.classList.replace("fixed", "hidden");
+    });
     const closeProductModal = document.querySelector("#closeProductModal");
     const canselModalBtn = document.querySelector(".close-product-modal");
     const addProductToLog = document.querySelector(".add-product-to-log");

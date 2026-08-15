@@ -155,6 +155,7 @@ export default class MealLoge {
         totale.fat += meals[i].fat;
       }
     }
+
     this.#totalKcal.innerText = `${Math.round(totale.calories)} / ${this.#calories} kcal`;
     this.#totalKcalBar.style.width = `${Math.min((totale.calories / this.#calories) * 100, 100)}%`;
     if (+totale.calories >= this.#calories) {
@@ -264,6 +265,7 @@ export default class MealLoge {
   getMealsData() {
     const meals = JSON.parse(localStorage.getItem("meals"));
     if (!meals) {
+      this.#meals = [];
       this.#initTotaleMealsInfo();
       this.#initWeeklyChart();
       this.#clearFoodLogBtn.classList.add("hidden");

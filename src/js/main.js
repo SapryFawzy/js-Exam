@@ -15,6 +15,10 @@ const ACTIVE_NAV_LINK_CLASSES = ["bg-emerald-50", "text-emerald-700"];
 const IN_ACTIVE_NAV_LINK_CLASSES = ["text-gray-600", "hover:bg-gray-50"];
 const headerTitle = document.querySelector("#header h1");
 const headerText = document.querySelector("#header p");
+const headerMenuBtn = document.getElementById("header-menu-btn");
+const sidebar = document.getElementById("sidebar");
+const sidebarOverlay = document.getElementById("sidebar-overlay");
+const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
 
 const nutriPlanServices = await new NutriPlanServices(
   BASE_API,
@@ -38,6 +42,11 @@ function switchActiveLink(e) {
   navLink.classList.add(...ACTIVE_NAV_LINK_CLASSES);
   const path = navLink.getAttribute("href");
   window.location.hash = path;
+}
+
+function hideMenu() {
+  sidebar.classList.remove("open");
+  sidebarOverlay.classList.remove("active");
 }
 
 async function renderHome() {
@@ -119,6 +128,18 @@ async function render() {
   nutriPlanServices.toggleLoader();
 }
 
+headerMenuBtn.addEventListener("click", (e) => {
+  sidebar.classList.add("open");
+  sidebarOverlay.classList.add("active");
+});
+sidebarCloseBtn.addEventListener("click", hideMenu);
+window.addEventListener("click", (e) => {
+  const openBtn = e.target.closest("#header-menu-btn");
+  if (openBtn) return;
+  const inSide = e.target.closest("#sidebar");
+  if (inSide) return;
+  hideMenu();
+});
 window.addEventListener("load", render);
 window.addEventListener("hashchange", router);
 navLinks.addEventListener("click", switchActiveLink);

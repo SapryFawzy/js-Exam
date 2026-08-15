@@ -648,7 +648,7 @@ export default class MealsUIComponent {
       const btn = e.target.closest("#log-meal-btn");
       if (!btn) return;
       this.logMealModal.innerHTML = `
-            <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+            <div id="innerModel" class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
         <div class="flex items-center gap-4 mb-6">
           <img
             src="${meal.thumbnail}"
@@ -740,6 +740,14 @@ export default class MealsUIComponent {
       </div>
     `;
 
+      window.addEventListener("click", (e) => {
+        const btn = e.target.closest("#log-meal-btn");
+        if (btn) return;
+        const ele = e.target.closest("#innerModel");
+        if (ele) return;
+        this.logMealModal.innerHTML = "";
+        this.logMealModal.classList.replace("fixed", "hidden");
+      });
       const confirmLogMeal = document.getElementById("confirm-log-meal");
       const cancelLogMeal = document.getElementById("cancel-log-meal");
       const decreaseServingsBtn = document.getElementById("decrease-servings");
