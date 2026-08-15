@@ -3,140 +3,139 @@ import MealCategories from "./mealCategoriesComponent.js";
 import MealsArea from "./mealsAreasComponent.js";
 
 export default class MealsUIComponent {
-  #ACTIVE_DISPLAY_BTN_CLASSES;
-  #ACTIVE_DISPLAY_ICON_CLASSE;
-  #IN_ACTIVE_DISPLAY_ICON_CLASSE;
-  #GRID_VIEW;
-  #LIST_VIEW;
-  #CARD_LIST_STYLE;
-  #LIST_VIEW_IMAGE_CLASSES;
-  #GRID_VIEW_IMAGE_CLASSE;
-  #ACTIVE_AREA_CLASSES;
-  #IN_ACTIVE_AREA_CLASSES;
-  #categoriesGrid;
-  #viewAllBtn;
-  #recipesGrid;
-  #recipesCount;
-  #viewToggle;
-  #viewBtns;
-  #area;
-  #searchInput;
-  #headerTitle;
-  #headerText;
-  #goToBtns;
-  #logMealModal;
+  ACTIVE_DISPLAY_BTN_CLASSES;
+  ACTIVE_DISPLAY_ICON_CLASSE;
+  IN_ACTIVE_DISPLAY_ICON_CLASSE;
+  GRID_VIEW;
+  LIST_VIEW;
+  CARD_LIST_STYLE;
+  LIST_VIEW_IMAGE_CLASSES;
+  GRID_VIEW_IMAGE_CLASSE;
+  ACTIVE_AREA_CLASSES;
+  IN_ACTIVE_AREA_CLASSES;
+  categoriesGrid;
+  viewAllBtn;
+  recipesGrid;
+  recipesCount;
+  viewToggle;
+  viewBtns;
+  area;
+  searchInput;
+  headerTitle;
+  headerText;
+  goToBtns;
+  logMealModal;
   home;
-  #meal;
-  #limit;
-  #collaction;
-  #method;
-  #searchType;
-  #mealarea;
-  #mealId;
-
-  #router;
+  meal;
+  limit;
+  collaction;
+  method;
+  searchType;
+  mealarea;
+  mealId;
+  router;
   meals;
   mealsCategories;
   mealsArea;
-  #nutriPlanServices;
+  nutriPlanServices;
 
   constructor(router, nutriPlanServices) {
-    this.#router = router;
-    this.#nutriPlanServices = nutriPlanServices;
+    this.router = router;
+    this.nutriPlanServices = nutriPlanServices;
 
-    this.#ACTIVE_DISPLAY_BTN_CLASSES = ["bg-white", "rounded-md", "shadow-sm"];
-    this.#ACTIVE_DISPLAY_ICON_CLASSE = "text-gray-700";
-    this.#IN_ACTIVE_DISPLAY_ICON_CLASSE = "text-gray-500";
-    this.#GRID_VIEW = ["grid-cols-4", "gap-5"];
-    this.#LIST_VIEW = ["grid-cols-2", "gap-4"];
-    this.#CARD_LIST_STYLE = ["flex", "flex-row", "h-40"];
-    this.#LIST_VIEW_IMAGE_CLASSES = ["w-48", "h-full"];
-    this.#GRID_VIEW_IMAGE_CLASSE = "h-48";
-    this.#ACTIVE_AREA_CLASSES = [
+    this.ACTIVE_DISPLAY_BTN_CLASSES = ["bg-white", "rounded-md", "shadow-sm"];
+    this.ACTIVE_DISPLAY_ICON_CLASSE = "text-gray-700";
+    this.IN_ACTIVE_DISPLAY_ICON_CLASSE = "text-gray-500";
+    this.GRID_VIEW = ["grid-cols-4", "gap-5"];
+    this.LIST_VIEW = ["grid-cols-2", "gap-4"];
+    this.CARD_LIST_STYLE = ["flex", "flex-row", "h-40"];
+    this.LIST_VIEW_IMAGE_CLASSES = ["w-48", "h-full"];
+    this.GRID_VIEW_IMAGE_CLASSE = "h-48";
+    this.ACTIVE_AREA_CLASSES = [
       "hover:bg-emerald-200",
       "bg-emerald-600",
       "text-white",
     ];
-    this.#IN_ACTIVE_AREA_CLASSES = [
+    this.IN_ACTIVE_AREA_CLASSES = [
       "hover:bg-gray-200",
       "bg-gray-100",
       "text-gray-700",
     ];
-    this.#categoriesGrid = document.getElementById("categories-grid");
-    this.#viewAllBtn = document.getElementById("viewAllBtn");
-    this.#recipesGrid = document.getElementById("recipes-grid");
-    this.#recipesCount = document.getElementById("recipes-count");
-    this.#viewToggle = document.getElementById("view-toggle");
-    this.#viewBtns = document.querySelectorAll(".view-btn");
-    this.#area = document.getElementById("area");
-    this.#searchInput = document.getElementById("search-input");
-    this.#goToBtns = document.getElementById("goToBtns");
-    this.#logMealModal = document.getElementById("log-meal-modal");
+    this.categoriesGrid = document.getElementById("categories-grid");
+    this.viewAllBtn = document.getElementById("viewAllBtn");
+    this.recipesGrid = document.getElementById("recipes-grid");
+    this.recipesCount = document.getElementById("recipes-count");
+    this.viewToggle = document.getElementById("view-toggle");
+    this.viewBtns = document.querySelectorAll(".view-btn");
+    this.area = document.getElementById("area");
+    this.searchInput = document.getElementById("search-input");
+    this.goToBtns = document.getElementById("goToBtns");
+    this.logMealModal = document.getElementById("log-meal-modal");
     this.home = {
       searchFiltersSection: document.getElementById("search-filters-section"),
       mealCategoriesSection: document.getElementById("meal-categories-section"),
       allRecipesSection: document.getElementById("all-recipes-section"),
       mealDetails: document.getElementById("meal-details"),
     };
-    this.#meal = "Chicken";
-    this.#limit;
-    this.#collaction;
-    this.#method;
-    this.#searchType;
-    this.#mealarea = "";
-    this.#mealId;
-    this.#initEvents();
-    this.meals = new Meals(this.#recipesGrid, this.#recipesCount);
-    this.mealsCategories = new MealCategories(this.#categoriesGrid);
-    this.mealsArea = new MealsArea(this.#area);
+    this.meal = "Chicken";
+    this.limit;
+    this.collaction;
+    this.method;
+    this.searchType;
+    this.mealarea = "";
+    this.mealId;
+    this.initEvents();
+    this.meals = new Meals(this.recipesGrid, this.recipesCount);
+    this.mealsCategories = new MealCategories(this.categoriesGrid);
+    this.mealsArea = new MealsArea(this.area);
   }
 
-  #getMealCardElement() {
+  getMealCardElement = () => {
     const recipeCard = document.querySelectorAll(".recipe-card");
     const cardImages = document.querySelectorAll(".card_image");
     const imageTags = document.querySelectorAll(".image_tags");
     return { recipeCard, cardImages, imageTags };
-  }
-  #setRecipesToGrid() {
-    const { recipeCard, cardImages, imageTags } = this.#getMealCardElement();
+  };
+  setRecipesToGrid = () => {
+    const { recipeCard, cardImages, imageTags } = this.getMealCardElement();
     if (!recipeCard) return;
     if (recipeCard[0]?.classList.contains("flex")) {
       recipeCard.forEach((card) => {
-        card.classList.remove(...this.#CARD_LIST_STYLE);
+        card.classList.remove(...this.CARD_LIST_STYLE);
       });
       cardImages.forEach((img) => {
-        img.classList.remove(...this.#LIST_VIEW_IMAGE_CLASSES);
-        img.classList.add(this.#GRID_VIEW_IMAGE_CLASSE);
+        img.classList.remove(...this.LIST_VIEW_IMAGE_CLASSES);
+        img.classList.add(this.GRID_VIEW_IMAGE_CLASSE);
       });
       imageTags.forEach((tags) => {
         tags.classList.remove("hidden");
       });
     }
-  }
-  #setRecipesToList() {
-    const { recipeCard, cardImages, imageTags } = this.#getMealCardElement();
+  };
+  setRecipesToList = () => {
+    const { recipeCard, cardImages, imageTags } = this.getMealCardElement();
     if (!recipeCard) return;
     if (!recipeCard[0]?.classList.contains("flex")) {
       recipeCard.forEach((card) => {
-        card.classList.add(...this.#CARD_LIST_STYLE);
+        card.classList.add(...this.CARD_LIST_STYLE);
       });
       cardImages.forEach((img) => {
-        img.classList.remove(this.#GRID_VIEW_IMAGE_CLASSE);
-        img.classList.add(...this.#LIST_VIEW_IMAGE_CLASSES);
+        img.classList.remove(this.GRID_VIEW_IMAGE_CLASSE);
+        img.classList.add(...this.LIST_VIEW_IMAGE_CLASSES);
       });
       imageTags.forEach((tags) => {
         tags.classList.add("hidden");
       });
     }
-  }
-  async #initializeMeals() {
-    let collaction = this.#collaction;
-    let method = this.#method;
-    let searchType = this.#searchType;
-    let meal = this.#meal;
-    let limit = this.#limit;
-    let mealarea = this.#mealarea;
-    this.#nutriPlanServices.generateApi({
+  };
+  initializeMeals = async () => {
+    let collaction = this.collaction;
+    let method = this.method;
+    let searchType = this.searchType;
+    let meal = this.meal;
+    let limit = this.limit;
+    let mealarea = this.mealarea;
+    this.nutriPlanServices.generateApi({
       collaction,
       method,
       searchType,
@@ -144,122 +143,120 @@ export default class MealsUIComponent {
       limit,
       mealarea,
     });
-    const data = await this.#nutriPlanServices.getData();
+    const data = await this.nutriPlanServices.getData();
 
-    this.meals.render(data, this.#meal);
-    if (this.#recipesGrid.classList.contains("grid-cols-4")) {
-      this.#setRecipesToGrid();
-    } else if (this.#recipesGrid.classList.contains("grid-cols-2")) {
-      this.#setRecipesToList();
+    this.meals.render(data, this.meal);
+    if (this.recipesGrid.classList.contains("grid-cols-4")) {
+      this.setRecipesToGrid();
+    } else if (this.recipesGrid.classList.contains("grid-cols-2")) {
+      this.setRecipesToList();
     }
-  }
-  async fetchAllMealsData(_limit = "25") {
-    this.#limit = _limit;
-    this.#collaction = "meals";
-    this.#method = "search";
-    this.#searchType = "q";
-    await this.#initializeMeals();
-  }
-  async #fetchMealData(e) {
+  };
+  fetchAllMealsData = async (_limit = "25") => {
+    this.limit = _limit;
+    this.collaction = "meals";
+    this.method = "search";
+    this.searchType = "q";
+    await this.initializeMeals();
+  };
+  fetchMealData = async (e) => {
     const btn = e.target.closest(".category-card");
     if (!btn) return;
-    this.#meal = btn.dataset.category;
-    if (this.#mealarea) {
-      let data = await fetchAreaMeals(this.#mealarea);
-      this.meals.render(data, this.#meal);
+    this.meal = btn.dataset.category;
+    if (this.mealarea) {
+      let data = await this.fetchAreaMeals(this.mealarea);
+      this.meals.render(data, this.meal);
     } else {
-      this.#limit = "20";
-      this.#collaction = "meals";
-      this.#method = "search";
-      this.#searchType = "q";
-      await this.#initializeMeals();
+      this.limit = "20";
+      this.collaction = "meals";
+      this.method = "search";
+      this.searchType = "q";
+      await this.initializeMeals();
     }
-  }
-  async getAllCategories() {
-    const categories = await this.#nutriPlanServices
-      .getAllCategorys()
-      .getData();
+  };
+  getAllCategories = async () => {
+    const categories = await this.nutriPlanServices.getAllCategorys().getData();
     let arr = [];
     categories.forEach((category) => {
       arr.push(category.name);
     });
     return arr;
-  }
-  async getAllAreas() {
-    const areas = await this.#nutriPlanServices.getAllAreas().getData();
+  };
+  getAllAreas = async () => {
+    const areas = await this.nutriPlanServices.getAllAreas().getData();
     let arr = [];
     areas.forEach((area) => {
       arr.push(area.name);
     });
     return arr;
-  }
-  #changeMealsDisplayStyle(e) {
+  };
+  changeMealsDisplayStyle = (e) => {
     const btn = e.target.closest(".view-btn");
     if (!btn) return;
-    this.#viewBtns.forEach((btn) => {
+    this.viewBtns.forEach((btn) => {
       if (btn.classList.contains("bg-white")) {
-        btn.classList.remove(...this.#ACTIVE_DISPLAY_BTN_CLASSES);
+        btn.classList.remove(...this.ACTIVE_DISPLAY_BTN_CLASSES);
         btn.children[0].classList.replace(
-          this.#ACTIVE_DISPLAY_ICON_CLASSE,
-          this.#IN_ACTIVE_DISPLAY_ICON_CLASSE,
+          this.ACTIVE_DISPLAY_ICON_CLASSE,
+          this.IN_ACTIVE_DISPLAY_ICON_CLASSE,
         );
       }
     });
-    btn.classList.add(...this.#ACTIVE_DISPLAY_BTN_CLASSES);
+    btn.classList.add(...this.ACTIVE_DISPLAY_BTN_CLASSES);
     btn.children[0].classList.replace(
-      this.#IN_ACTIVE_DISPLAY_ICON_CLASSE,
-      this.#ACTIVE_DISPLAY_ICON_CLASSE,
+      this.IN_ACTIVE_DISPLAY_ICON_CLASSE,
+      this.ACTIVE_DISPLAY_ICON_CLASSE,
     );
     if (btn.id === "grid-view-btn") {
-      this.#recipesGrid.classList.remove(...this.#LIST_VIEW);
-      this.#recipesGrid.classList.add(...this.#GRID_VIEW);
-      this.#setRecipesToGrid();
+      this.recipesGrid.classList.remove(...this.LIST_VIEW);
+      this.recipesGrid.classList.add(...this.GRID_VIEW);
+      this.setRecipesToGrid();
     } else if (btn.id === "list-view-btn") {
-      this.#recipesGrid.classList.remove(...this.#GRID_VIEW);
-      this.#recipesGrid.classList.add(...this.#LIST_VIEW);
-      this.#setRecipesToList();
+      this.recipesGrid.classList.remove(...this.GRID_VIEW);
+      this.recipesGrid.classList.add(...this.LIST_VIEW);
+      this.setRecipesToList();
     }
-  }
-  async #fetchAreaMeals(area) {
+  };
+  fetchAreaMeals = async (area) => {
     if (area) {
-      this.#mealarea = area;
-      return this.#nutriPlanServices.fetchAllAreaMeals(area, this.#meal);
+      this.mealarea = area;
+      return this.nutriPlanServices.fetchAllAreaMeals(area, this.meal);
     } else {
-      this.fetchAllMealsData(limit);
+      this.fetchAllMealsData(this.limit);
     }
-  }
-  async #showAreaMeals(e) {
+  };
+  showAreaMeals = async (e) => {
     const btn = e.target.closest(".area-btn");
     if (!btn) return;
     const btns = document.querySelectorAll(".area-btn");
     let area = btn.dataset.area;
     btns.forEach((btn) => {
       if (btn.classList.contains("bg-emerald-600")) {
-        btn.classList.remove(...this.#ACTIVE_AREA_CLASSES);
-        btn.classList.add(...this.#IN_ACTIVE_AREA_CLASSES);
+        btn.classList.remove(...this.ACTIVE_AREA_CLASSES);
+        btn.classList.add(...this.IN_ACTIVE_AREA_CLASSES);
       }
     });
-    btn.classList.remove(...this.#IN_ACTIVE_AREA_CLASSES);
-    btn.classList.add(...this.#ACTIVE_AREA_CLASSES);
-    const data = await this.#fetchAreaMeals(area);
-    this.meals.render(data, this.#meal);
-    if (this.#recipesGrid.classList.contains("grid-cols-4")) {
-      this.#setRecipesToGrid();
-    } else if (this.#recipesGrid.classList.contains("grid-cols-2")) {
-      this.#setRecipesToList();
+    btn.classList.remove(...this.IN_ACTIVE_AREA_CLASSES);
+    btn.classList.add(...this.ACTIVE_AREA_CLASSES);
+    const data = await this.fetchAreaMeals(area);
+    this.meals.render(data, this.meal);
+    if (this.recipesGrid.classList.contains("grid-cols-4")) {
+      this.setRecipesToGrid();
+    } else if (this.recipesGrid.classList.contains("grid-cols-2")) {
+      this.setRecipesToList();
     }
-  }
-  async #search(e) {
+  };
+  search = async (e) => {
     let text = e.target.value;
-    const data = await this.#nutriPlanServices
+    const data = await this.nutriPlanServices
       .searchMeals(text.trim())
       .getSearchData();
     let arr = [];
     data.meals.forEach((e) => arr.push({ idMeal: e.idMeal }));
-    let myData = await this.#nutriPlanServices.fetchMealsById(arr);
+    let myData = await this.nutriPlanServices.fetchMealsById(arr);
     this.meals.render(myData, text, true);
-  }
-  async #showDetails(meal) {
+  };
+  showDetails = async (meal) => {
     if (meal === []) return;
     let instructions = meal.instructions.join(" ");
     let arr = instructions.split(" ");
@@ -501,7 +498,7 @@ export default class MealsUIComponent {
       // history.back(); not working for me as i wish
       window.location.hash = "#/home";
     });
-    const nutritions = await this.#nutriPlanServices.getNutritions(
+    const nutritions = await this.nutriPlanServices.getNutritions(
       meal.name,
       ingredients,
     );
@@ -649,7 +646,7 @@ export default class MealsUIComponent {
     logMealBtn.addEventListener("click", (e) => {
       const btn = e.target.closest("#log-meal-btn");
       if (!btn) return;
-      this.#logMealModal.innerHTML = `
+      this.logMealModal.innerHTML = `
             <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
         <div class="flex items-center gap-4 mb-6">
           <img
@@ -763,7 +760,7 @@ export default class MealsUIComponent {
       });
 
       cancelLogMeal.addEventListener("click", (e) => {
-        this.#logMealModal.classList.replace("fixed", "hidden");
+        this.logMealModal.classList.replace("fixed", "hidden");
       });
       confirmLogMeal.addEventListener("click", (e) => {
         let dataStorge = JSON.parse(localStorage.getItem("meals"));
@@ -791,7 +788,7 @@ export default class MealsUIComponent {
           meals = JSON.stringify([newMeal]);
         }
         localStorage.setItem("meals", meals);
-        this.#logMealModal.classList.replace("fixed", "hidden");
+        this.logMealModal.classList.replace("fixed", "hidden");
         Swal.fire({
           title: `Chicken Handi (${counter} serving) has been added to your daily log.`,
           icon: "success",
@@ -800,21 +797,21 @@ export default class MealsUIComponent {
           draggable: false,
         });
       });
-      this.#logMealModal.classList.replace("hidden", "fixed");
+      this.logMealModal.classList.replace("hidden", "fixed");
     });
-  }
-  #initEvents() {
-    this.#categoriesGrid.addEventListener("click", this.#fetchMealData);
-    this.#viewAllBtn.addEventListener("click", this.fetchAllMealsData);
-    this.#viewToggle.addEventListener("click", this.#changeMealsDisplayStyle);
-    this.#area.addEventListener("click", this.#showAreaMeals);
-    this.#searchInput.addEventListener("input", this.#search);
-    this.#recipesGrid.addEventListener("click", async (e) => {
+  };
+  initEvents() {
+    this.categoriesGrid.addEventListener("click", this.fetchMealData);
+    this.viewAllBtn.addEventListener("click", this.fetchAllMealsData);
+    this.viewToggle.addEventListener("click", this.changeMealsDisplayStyle);
+    this.area.addEventListener("click", this.showAreaMeals);
+    this.searchInput.addEventListener("input", this.search);
+    this.recipesGrid.addEventListener("click", async (e) => {
       const mealCard = e.target.closest(".recipe-card");
       if (!mealCard) return;
-      this.#mealId = mealCard.dataset.mealId;
+      this.mealId = mealCard.dataset.mealId;
       history.replaceState({}, "", "#/meal/");
-      this.#router();
+      this.router();
     });
   }
 }

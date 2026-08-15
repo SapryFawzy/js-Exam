@@ -93,6 +93,7 @@ async function router() {
   } else if (hash === "#/foodlog") {
     await renderFoodLog();
   } else if (hash.includes("#/meal/")) {
+    let mealId = mealsUIComponent.mealId;
     if (!mealId) {
       history.replaceState({}, "", `#/home`);
       router();
@@ -100,7 +101,7 @@ async function router() {
     }
     const data = await nutriPlanServices.fetchMealsById(mealId);
     history.replaceState({}, "", `#/meal/${data?.name?.split(" ").join("-")}`);
-    showDetails(data);
+    mealsUIComponent.showDetails(data);
   }
   if (!navLink.classList.contains("bg-emerald-50")) {
     links.forEach((link) => {

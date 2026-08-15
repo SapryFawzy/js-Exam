@@ -26,6 +26,7 @@ export default class MealLoge {
   #prsntgeCarb;
   #prsntgeFat;
   #donMSG;
+  #realMeals;
   constructor() {
     this.#borderT = document.querySelector(".border-t h4 span");
     this.#clearFoodLogBtn = document.getElementById("clear-foodlog");
@@ -50,16 +51,26 @@ export default class MealLoge {
     this.#donMSG = document.getElementById("donMSG");
   }
   #createMealCard(meal, index) {
+    let mealImg = `
+                <div class="v_small_img bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden flex-shrink-0">
+                    <i class="text-4xl text-gray-400" data-fa-i2svg=""><svg class="svg-inline--fa fa-box" data-prefix="fas" data-icon="box" role="img" viewBox="0 0 448 512" aria-hidden="true" data-fa-i2svg=""><path fill="currentColor" d="M369.4 128l-34.3-48-222.1 0-34.3 48 290.7 0zM0 148.5c0-13.3 4.2-26.3 11.9-37.2L60.9 42.8C72.9 26 92.3 16 112.9 16l222.1 0c20.7 0 40.1 10 52.1 26.8l48.9 68.5c7.8 10.9 11.9 23.9 11.9 37.2L448 416c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 148.5z"></path></svg></i>
+                </div>
+    `;
+    if (meal.img) {
+      mealImg = `
+        <img src="${meal.img}" alt="${meal.name}" class="w-14 h-14 rounded-xl object-cover">
+      `;
+    }
     return `
                     <div class="flex items-center justify-between bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-all">
                         <div class="flex items-center gap-4">
-                            <img src="${meal.img}" alt="${meal.name}" class="w-14 h-14 rounded-xl object-cover">
+                            ${mealImg}
                             <div>
                                 <p class="font-semibold text-gray-900">Chicken Congee</p>
                                 <p class="text-sm text-gray-500">
-                                    ${meal.src === "Recipe"?`${meal.serving} serving`:meal.brand}
+                                    ${meal.src === "Recipe" ? `${meal.serving} serving` : meal.brand}
                                     <span class="mx-1">•</span>
-                                    <span class="${meal.src === "Recipe"?`text-emerald-600`:`text-blue-600`}">${meal.src}</span>
+                                    <span class="${meal.src === "Recipe" ? `text-emerald-600` : `text-blue-600`}">${meal.src}</span>
                                 </p>
                                 <p class="text-xs text-gray-400 mt-1">${meal.time}</p>
                             </div>
@@ -123,8 +134,8 @@ export default class MealLoge {
       this.getMealsData();
       return;
     }
-    this.#meals.splice(btn.dataset.index, 1);
-    let newMealsArr = JSON.stringify(this.#meals);
+    this.#realMeals.splice(btn.dataset.index, 1);
+    let newMealsArr = JSON.stringify(this.this.#realMeals);
     localStorage.setItem("meals", newMealsArr);
     this.getMealsData();
   }
@@ -201,7 +212,7 @@ export default class MealLoge {
                                 <p class="text-xs text-gray-500 mb-1">${data.weekday}</p>
                                 <p class="text-sm font-medium text-gray-900">${data.day}</p>
                                 <div class="mt-2 ${dayWithCalStyle}">
-                                    <p class="text-lg font-bold">${data.totalCalories}</p>
+                                    <p class="text-lg font-bold">${Math.round(+data.totalCalories)}</p>
                                     <p class="text-xs">kcal</p>
                                 </div>
                                 
@@ -282,16 +293,21 @@ export default class MealLoge {
       this.#itemsThisWeek.innerText = "0";
       return;
     }
-    this.#meals = meals;
+    this.#realMeals = meals;
+    let todayMeals = [];
+    let htmlBlock = "";
+    for (let i = 0; i < meals.length; i++) {
+      if (meals[i].date === new Date().toLocaleDateString("en-US")) {
+        htmlBlock += this.#createMealCard(meals[i], i);
+        todayMeals.push(meals[i]);
+      }
+    }
+    this.#meals = todayMeals;
     this.#mealsCount = meals.length;
     this.#initTotaleMealsInfo();
     this.#initWeeklyChart();
     this.#clearFoodLogBtn.classList.remove("hidden");
     this.#borderT.innerText = `(${meals.length})`;
-    let htmlBlock = "";
-    for (let i = 0; i < meals.length; i++) {
-      htmlBlock += this.#createMealCard(meals[i], i);
-    }
     this.#loggedItemsListContainer.innerHTML = htmlBlock;
     const removeFoodlogItem = document.querySelectorAll(".remove-foodlog-item");
 
