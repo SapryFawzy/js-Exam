@@ -135,7 +135,7 @@ export default class MealLoge {
       return;
     }
     this.#realMeals.splice(btn.dataset.index, 1);
-    let newMealsArr = JSON.stringify(this.this.#realMeals);
+    let newMealsArr = JSON.stringify(this.#realMeals);
     localStorage.setItem("meals", newMealsArr);
     this.getMealsData();
   }
