@@ -251,6 +251,7 @@ export default class MealsUIComponent {
     const data = await this.nutriPlanServices
       .searchMeals(text.trim())
       .getSearchData();
+    if (!data.meals) data.meals = [];
     let arr = [];
     data.meals.forEach((e) => arr.push({ idMeal: e.idMeal }));
     let myData = await this.nutriPlanServices.fetchMealsById(arr);
