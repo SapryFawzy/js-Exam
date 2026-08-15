@@ -77,13 +77,13 @@ export default class MealLoge {
                         </div>
                         <div class="flex items-center gap-4">
                             <div class="text-right">
-                                <p class="text-lg font-bold text-emerald-600">${meal.calories}</p>
+                                <p class="text-lg font-bold text-emerald-600">${Math.round(meal.calories)}</p>
                                 <p class="text-xs text-gray-500">kcal</p>
                             </div>
                             <div class="hidden md:flex gap-2 text-xs text-gray-500">
-                                <span class="px-2 py-1 bg-blue-50 rounded">${meal.protein}g P</span>
-                                <span class="px-2 py-1 bg-amber-50 rounded">${meal.carbs}g C</span>
-                                <span class="px-2 py-1 bg-purple-50 rounded">${meal.fat}g F</span>
+                                <span class="px-2 py-1 bg-blue-50 rounded">${meal.protein.toFixed(2)}g P</span>
+                                <span class="px-2 py-1 bg-amber-50 rounded">${meal.carbs.toFixed(2)}g C</span>
+                                <span class="px-2 py-1 bg-purple-50 rounded">${meal.fat.toFixed(2)}g F</span>
                             </div>
                             <button class="remove-foodlog-item text-gray-400 hover:text-red-500 transition-all p-2" data-index="${index}">
                                 <i data-fa-i2svg=""><svg class="svg-inline--fa fa-trash-can" data-prefix="fas" data-icon="trash-can" role="img" viewBox="0 0 448 512" aria-hidden="true" data-fa-i2svg=""><path fill="currentColor" d="M136.7 5.9C141.1-7.2 153.3-16 167.1-16l113.9 0c13.8 0 26 8.8 30.4 21.9L320 32 416 32c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 8.7-26.1zM32 144l384 0 0 304c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-304zm88 64c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24zm104 0c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24zm104 0c-13.3 0-24 10.7-24 24l0 192c0 13.3 10.7 24 24 24s24-10.7 24-24l0-192c0-13.3-10.7-24-24-24z"></path></svg></i>
@@ -155,7 +155,7 @@ export default class MealLoge {
         totale.fat += meals[i].fat;
       }
     }
-    this.#totalKcal.innerText = `${totale.calories} / ${this.#calories} kcal`;
+    this.#totalKcal.innerText = `${Math.round(totale.calories)} / ${this.#calories} kcal`;
     this.#totalKcalBar.style.width = `${Math.min((totale.calories / this.#calories) * 100, 100)}%`;
     if (+totale.calories >= this.#calories) {
       this.#totalKcalBar.classList.add("bg-red-500");
@@ -164,7 +164,7 @@ export default class MealLoge {
       this.#totalKcalBar.classList.remove("bg-red-500");
       this.#prsntgeCal.classList.remove("text-red-500");
     }
-    this.#totaltotalProtein.innerText = `${totale.protein} / ${this.#protein} g`;
+    this.#totaltotalProtein.innerText = `${totale.protein.toFixed(2)} / ${this.#protein} g`;
     this.#totaltotalProteinBar.style.width = `${Math.min((totale.protein / this.#protein) * 100, 100)}%`;
     if (+totale.protein >= this.#protein) {
       this.#totaltotalProteinBar.classList.add("bg-red-500");
@@ -173,7 +173,7 @@ export default class MealLoge {
       this.#totaltotalProteinBar.classList.remove("bg-red-500");
       this.#prsntgeProt.classList.remove("text-red-500");
     }
-    this.#totalCarbs.innerText = `${totale.carbs} / ${this.#carbs} g`;
+    this.#totalCarbs.innerText = `${totale.carbs.toFixed(2)} / ${this.#carbs} g`;
     this.#totalCarbsBar.style.width = `${Math.min((totale.carbs / this.#carbs) * 100, 100)}%`;
     if (+totale.carbs >= this.#carbs) {
       this.#totalCarbsBar.classList.add("bg-red-500");
@@ -182,7 +182,7 @@ export default class MealLoge {
       this.#totalCarbsBar.classList.remove("bg-red-500");
       this.#prsntgeCarb.classList.remove("text-red-500");
     }
-    this.#totalFat.innerText = `${totale.fat} / ${this.#fat} g`;
+    this.#totalFat.innerText = `${totale.fat.toFixed(2)} / ${this.#fat} g`;
     this.#totalFatBar.style.width = `${Math.min((totale.fat / this.#fat) * 100, 100)}%`;
     if (+totale.fat >= this.#fat) {
       this.#totalFatBar.classList.add("bg-red-500");
