@@ -137,6 +137,11 @@ window.addEventListener("click", (e) => {
   const openBtn = e.target.closest("#header-menu-btn");
   if (openBtn) return;
   const inSide = e.target.closest("#sidebar");
+  const link = e.target.closest(".nav-link");
+  if (link) {
+    hideMenu();
+    return;
+  }
   if (inSide) return;
   hideMenu();
 });
