@@ -129,6 +129,7 @@ export default class MealsUIComponent {
     }
   };
   initializeMeals = async () => {
+    this.meals.showLoadingState();
     let collaction = this.collaction;
     let method = this.method;
     let searchType = this.searchType;
@@ -153,6 +154,7 @@ export default class MealsUIComponent {
     }
   };
   fetchAllMealsData = async (_limit = "25") => {
+    await this.meals.showLoadingState();
     this.limit = _limit;
     this.collaction = "meals";
     this.method = "search";
@@ -162,6 +164,7 @@ export default class MealsUIComponent {
   fetchMealData = async (e) => {
     const btn = e.target.closest(".category-card");
     if (!btn) return;
+    await this.meals.showLoadingState();
     this.meal = btn.dataset.category;
     if (this.mealarea) {
       let data = await this.fetchAreaMeals(this.mealarea);
@@ -228,6 +231,7 @@ export default class MealsUIComponent {
   showAreaMeals = async (e) => {
     const btn = e.target.closest(".area-btn");
     if (!btn) return;
+    await this.meals.showLoadingState();
     const btns = document.querySelectorAll(".area-btn");
     let area = btn.dataset.area;
     btns.forEach((btn) => {
@@ -247,6 +251,7 @@ export default class MealsUIComponent {
     }
   };
   search = async (e) => {
+    await this.meals.showLoadingState();
     let text = e.target.value;
     const data = await this.nutriPlanServices
       .searchMeals(text.trim())

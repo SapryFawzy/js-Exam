@@ -5,11 +5,17 @@ export default class Meals {
     this.#container = container;
     this.#title = title;
   }
-  #showLoadingState() {
+  showLoadingState() {
     this.#container.innerHTML = `
       <div class="flex items-center justify-center py-12">
         <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
       </div>`;
+
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        resolve();
+      });
+    });
   }
   #createMealCard(meal) {
     let instructions = meal.instructions.join("");
@@ -68,7 +74,6 @@ export default class Meals {
       `;
   }
   render(meals, category, isSearch) {
-    this.#showLoadingState();
     try {
       if (!meals.length) throw new Error();
       let htmlBlock = "";

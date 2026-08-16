@@ -56,15 +56,12 @@ export default class NutriPlanServices {
     }
   }
   async fetchAllAreaMeals(area, meal) {
+    let api = `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`;
     try {
-      const res = await fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`,
-      );
-
+      const res = await fetch(api);
       const data = (await res.json()).meals;
       if (!data) throw new Error();
-
-      let arr = this.fetchMealsById(data);
+      let arr = await this.fetchMealsById(data);
       arr = arr.filter((e) => e.category === meal);
       return arr;
     } catch (e) {
