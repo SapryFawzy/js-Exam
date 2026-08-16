@@ -157,10 +157,7 @@ export default class MealsUIComponent {
     const res = await fetch(
       `https://nutriplan-api.vercel.app/api/meals/random?count=${_limit}`,
     );
-
     const data = (await res.json()).results;
-    console.log(data);
-
     this.meals.render(data);
     if (this.recipesGrid.classList.contains("grid-cols-4")) {
       this.setRecipesToGrid();
@@ -182,6 +179,7 @@ export default class MealsUIComponent {
     if (!btn) return;
     await this.meals.showLoadingState();
     this.meal = btn.dataset.category;
+
     if (this.mealarea) {
       let data = await this.fetchAreaMeals(this.mealarea);
       this.meals.render(data, this.meal);
@@ -239,10 +237,30 @@ export default class MealsUIComponent {
   fetchAreaMeals = async (area) => {
     if (area) {
       this.mealarea = area;
-      return this.nutriPlanServices.fetchAllAreaMeals(area, this.meal);
+      return this.nutriPlanServices.fetchAllAreaMeals({
+        area: area,
+        meal: this.meal,
+      });
     } else {
       this.fetchAllMealsData(this.limit);
     }
+  };
+  viewAllCurentAreaMeals = async () => {
+    let data;
+    let area = this.mealarea;
+
+    if (area) {
+      data = await this.nutriPlanServices.fetchAllAreaMeals({
+        area: area,
+        meal: this.meal,
+        filter: false,
+      });
+    } else {
+      await this.fetchRandomMeals(this.limit);
+      return;
+    }
+
+    this.meals.render(data);
   };
   showAreaMeals = async (e) => {
     const btn = e.target.closest(".area-btn");
@@ -260,6 +278,7 @@ export default class MealsUIComponent {
     btn.classList.add(...this.ACTIVE_AREA_CLASSES);
     if (!area) {
       this.fetchRandomMeals();
+      this.mealarea = "";
       return;
     }
     const data = await this.fetchAreaMeals(area);
@@ -836,7 +855,7 @@ export default class MealsUIComponent {
   };
   initEvents() {
     this.categoriesGrid.addEventListener("click", this.fetchMealData);
-    this.viewAllBtn.addEventListener("click", this.fetchRandomMeals);
+    this.viewAllBtn.addEventListener("click", this.viewAllCurentAreaMeals);
     this.viewToggle.addEventListener("click", this.changeMealsDisplayStyle);
     this.area.addEventListener("click", this.showAreaMeals);
     this.searchInput.addEventListener("input", this.search);
