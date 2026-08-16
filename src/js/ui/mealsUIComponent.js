@@ -153,6 +153,7 @@ export default class MealsUIComponent {
     }
   };
   fetchRandomMeals = async (e, _limit = 25) => {
+    await this.meals.showLoadingState();
     const res = await fetch(
       `https://nutriplan-api.vercel.app/api/meals/random?count=${_limit}`,
     );
