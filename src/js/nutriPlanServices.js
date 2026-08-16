@@ -17,6 +17,11 @@ export default class NutriPlanServices {
   }
   toggleLoader() {
     this.#loader.classList.toggle("loading");
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        resolve();
+      });
+    });
   }
   searchMeals(text) {
     this.#api = `https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`;

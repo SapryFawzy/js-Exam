@@ -46,7 +46,7 @@ export default class Meals {
                   <span
                     class="px-2 py-1 bg-emerald-500 text-xs font-semibold rounded-full text-white"
                   >
-                    ${meal.area}
+                    ${meal.area || "Unknown"}
                   </span>
                 </div>
               </div>
@@ -73,7 +73,7 @@ export default class Meals {
             </div>
       `;
   }
-  render(meals, category, isSearch) {
+  render(meals, category = " ", isSearch = false) {
     try {
       if (!meals.length) throw new Error();
       let htmlBlock = "";

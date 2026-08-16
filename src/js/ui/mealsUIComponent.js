@@ -152,6 +152,21 @@ export default class MealsUIComponent {
       this.setRecipesToList();
     }
   };
+  fetchRandomMeals = async (e, _limit = 25) => {
+    const res = await fetch(
+      `https://nutriplan-api.vercel.app/api/meals/random?count=${_limit}`,
+    );
+
+    const data = (await res.json()).results;
+    console.log(data);
+
+    this.meals.render(data);
+    if (this.recipesGrid.classList.contains("grid-cols-4")) {
+      this.setRecipesToGrid();
+    } else if (this.recipesGrid.classList.contains("grid-cols-2")) {
+      this.setRecipesToList();
+    }
+  };
   fetchAllMealsData = async (_limit = "25") => {
     await this.meals.showLoadingState();
     this.limit = _limit;
@@ -242,6 +257,10 @@ export default class MealsUIComponent {
     });
     btn.classList.remove(...this.IN_ACTIVE_AREA_CLASSES);
     btn.classList.add(...this.ACTIVE_AREA_CLASSES);
+    if (!area) {
+      this.fetchRandomMeals();
+      return;
+    }
     const data = await this.fetchAreaMeals(area);
     this.meals.render(data, this.meal);
     if (this.recipesGrid.classList.contains("grid-cols-4")) {
@@ -816,7 +835,7 @@ export default class MealsUIComponent {
   };
   initEvents() {
     this.categoriesGrid.addEventListener("click", this.fetchMealData);
-    this.viewAllBtn.addEventListener("click", this.fetchAllMealsData);
+    this.viewAllBtn.addEventListener("click", this.fetchRandomMeals);
     this.viewToggle.addEventListener("click", this.changeMealsDisplayStyle);
     this.area.addEventListener("click", this.showAreaMeals);
     this.searchInput.addEventListener("input", this.search);

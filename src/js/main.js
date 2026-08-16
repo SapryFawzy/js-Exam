@@ -19,6 +19,7 @@ const headerMenuBtn = document.getElementById("header-menu-btn");
 const sidebar = document.getElementById("sidebar");
 const sidebarOverlay = document.getElementById("sidebar-overlay");
 const sidebarCloseBtn = document.getElementById("sidebar-close-btn");
+const mainContent = document.getElementById("main-content");
 
 const nutriPlanServices = await new NutriPlanServices(
   BASE_API,
@@ -125,7 +126,8 @@ async function router() {
 
 async function render() {
   await router();
-  nutriPlanServices.toggleLoader();
+  mainContent.classList.remove("hidden");
+  await nutriPlanServices.toggleLoader();
 }
 
 headerMenuBtn.addEventListener("click", (e) => {
