@@ -129,7 +129,6 @@ export default class MealsUIComponent {
     }
   };
   initializeMeals = async () => {
-    this.meals.showLoadingState();
     let collaction = this.collaction;
     let method = this.method;
     let searchType = this.searchType;
@@ -161,6 +160,7 @@ export default class MealsUIComponent {
     this.searchType = "q";
     await this.initializeMeals();
   };
+
   fetchMealData = async (e) => {
     const btn = e.target.closest(".category-card");
     if (!btn) return;
@@ -172,8 +172,8 @@ export default class MealsUIComponent {
     } else {
       this.limit = "20";
       this.collaction = "meals";
-      this.method = "search";
-      this.searchType = "q";
+      this.method = "filter";
+      this.searchType = "category";
       await this.initializeMeals();
     }
   };
