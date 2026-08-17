@@ -43,11 +43,17 @@ export default class Meals {
                   >
                     ${meal.category}
                   </span>
-                  <span
+                  ${
+                    meal.area
+                      ? `
+                    <span
                     class="px-2 py-1 bg-emerald-500 text-xs font-semibold rounded-full text-white"
                   >
-                    ${meal.area || "Unknown"}
+                    ${meal.area}
                   </span>
+                    `
+                      : ``
+                  }
                 </div>
               </div>
               <div class="p-4">
@@ -66,7 +72,7 @@ export default class Meals {
                   </span>
                   <span class="font-semibold text-gray-500">
                     <i class="fa-solid fa-globe text-blue-500 mr-1"></i>
-                    ${meal.area}
+                    ${meal.area || "International"}
                   </span>
                 </div>
               </div>
